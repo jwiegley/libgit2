@@ -233,8 +233,15 @@ unsigned int git_tree_entrycount(git_tree *tree)
 
 unsigned int git_treebuilder_entrycount(git_treebuilder *bld)
 {
+        int count = 0;
+        int i;
 	assert(bld);
-	return bld->entries.length;
+	for (i = 0; i < bld->entries.length; ++i) {
+		git_tree_entry *entry = bld->entries.contents[i];
+		if (! entry->removed)
+                  ++count;
+	}
+	return count;
 }
 
 static int tree_error(const char *str)
