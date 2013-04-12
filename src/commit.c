@@ -179,6 +179,7 @@ int git_commit_create_oid(
 
 	git_buf_putc(&commit, '\n');
 
+#if 0
 	/* Remove comments by default */
 	if (git_message_prettify(&cleaned_message, message, 1) < 0)
 		goto on_error;
@@ -187,6 +188,10 @@ int git_commit_create_oid(
 		goto on_error;
 
 	git_buf_free(&cleaned_message);
+#else
+	if (git_buf_puts(&commit, message) < 0)
+		goto on_error;
+#endif
 
 	if (git_repository_odb__weakptr(&odb, repo) < 0)
 		goto on_error;
