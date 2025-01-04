@@ -186,7 +186,7 @@ int git_buf_vprintf(git_buf *buf, const char *format, va_list ap)
 
 	while (1) {
 		va_list args;
-		va_copy(args, ap);
+		__va_copy(args, ap);
 
 		len = p_vsnprintf(
 			buf->ptr + buf->size,
